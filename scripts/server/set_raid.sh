@@ -18,6 +18,12 @@ dev_raid="/dev/md0"
 # RAID mount dir
 dir_mount=$1
 
+# erase leftover RAID superblocks in partitions, otherwise mdadm --create
+# fails with "Device or resource busy"
+sudo mdadm --stop --scan
+for part in "${dev_hdd_1}1" "${dev_hdd_2}1"; do
+    [ -e "$part" ] && sudo mdadm --zero-superblock --force "$part"
+done
 # erase HDDs
 sudo wipefs -a "$dev_hdd_1" "$dev_hdd_2"
 
