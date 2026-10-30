@@ -42,7 +42,8 @@ sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
 sudo update-initramfs -u
 
 # mount
-dev_raid_uuid=$(lsblk $dev_raid -o UUID | tail -n 1)
+sudo udevadm settle
+dev_raid_uuid=$(sudo blkid -s UUID -o value "$dev_raid")
 sudo sh -c " echo \"UUID=$dev_raid_uuid  $dir_mount  ext4  defaults,noatime,nofail  0  2\" >> /etc/fstab"
 sudo systemctl daemon-reload
 sudo mkdir -p $dir_mount
