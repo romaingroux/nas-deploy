@@ -35,7 +35,7 @@ sudo parted -s $dev_hdd_2 mklabel gpt mkpart primary 1MiB 100% set 1 raid on
 sudo mdadm --create --verbose $dev_raid --level=1 --raid-devices=2 --bitmap=internal --run ${dev_hdd_1}1 ${dev_hdd_2}1
 
 # format array
-sudo mkfs.ext4 -L nas-raid $dev_raid
+sudo mkfs.ext4 -F -L nas-raid $dev_raid
 # persist array as $dev_raid, dropping any ARRAY line left from a previous install
 sudo sed -i '/^ARRAY/d' /etc/mdadm/mdadm.conf
 sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
