@@ -19,7 +19,7 @@ dev_raid="/dev/md0"
 dir_mount=$1
 
 # erase HDDs
-sudo wipefs -a $dev_hdd_1 $dev_hdd_2
+sudo wipefs -a "$dev_hdd_1" "$dev_hdd_2"
 
 # partition
 sudo parted -s $dev_hdd_1 mklabel gpt mkpart primary 1MiB 100% set 1 raid on
