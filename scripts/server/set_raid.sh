@@ -36,7 +36,8 @@ sudo mdadm --create --verbose $dev_raid --level=1 --raid-devices=2 --bitmap=inte
 
 # format array
 sudo mkfs.ext4 -L nas-raid $dev_raid
-# persist array as $dev_raid
+# persist array as $dev_raid, dropping any ARRAY line left from a previous install
+sudo sed -i '/^ARRAY/d' /etc/mdadm/mdadm.conf
 sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
 sudo update-initramfs -u
 
