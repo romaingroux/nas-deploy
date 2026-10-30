@@ -19,14 +19,22 @@ if [ "$password" != "$password_confirm" ]; then
     exit 1
 fi
 
+echo "$(date) [server.sh] setting WiFi power saving..."
 ./set_wifi_powersave.sh
+echo "$(date) [server.sh] setting WiFi power saving done"
 
 # create users and groups
+echo "$(date) [server.sh] setting users..."
 ./set_users.sh "$nas_group" "$user"
+echo "[server.sh] setting users done"
 
 # set up RAID
+echo "$(date) [server.sh] setting RAID..."
 ./set_raid.sh "$dir_raid"
+echo "$(date) [server.sh] setting RAID done"
 
 # set SMB server
 export SMB_PASSWORD="$password"
+echo "$(date) [server.sh] setting SMB..."
 ./set_smb.sh "$dir_raid" "$user" "$nas_group"
+echo "$(date) [server.sh] setting SMB done"
