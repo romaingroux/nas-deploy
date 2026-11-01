@@ -1,0 +1,10 @@
+# editor and OS noise
+*.swp
+*.swo
+*~
+.DS_Store
+
+# credentials that must never be committed
+*.smbcredentials
+.env
+*.secret
